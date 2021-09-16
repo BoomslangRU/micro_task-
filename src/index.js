@@ -1,17 +1,57 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { useState } from 'react'
+import ReactDOM from 'react-dom'
+import './index.scss'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const userID = [1, 2]
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const ViewFakeData = ({ userID }) => {
+
+	const [content, setContent] = useState([])
+	// const [one, two] = userID
+
+	const URL = 'https://jsonplaceholder.typicode.com/users/'
+
+	const loadData = async () => {
+		// fetchData
+
+		await fetch(URL + userID[0] + '/todos')
+			.then(response => {
+				response.json().then(data => {
+					return setContent(content => [...content, data])
+				})
+			})
+
+		await fetch(URL + userID[1] + '/todos')
+			.then(response => {
+				response.json().then(data => {
+					return setContent(content => [...content, data])
+				})
+			})
+	}
+	return (
+		<section className='fake-data_wrap'>
+			<h3>Todos list users</h3>
+			<button onClick={loadData} disabled={content.length > 0}>Load</button>
+			<div className='fake-data_content'>
+				{content.length > 0 ?
+					content.flat().map(item => {
+						return (
+							<div className='fake-data_lists' key={item.id}>
+								<div>{item.userId}</div>
+								<div>{item.id}</div>
+								<div>{item.title}</div>
+								<div>{item.completed ? 'completed' : 'not completed'}</div>
+							</div>
+						)
+					})
+					:
+					<div className='fake-data_no-data'>
+						No content
+					</div>
+				}
+			</div>
+		</section>
+	)
+}
+
+ReactDOM.render(<ViewFakeData userID={userID} />, document.querySelector('#app'))

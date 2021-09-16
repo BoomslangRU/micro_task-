@@ -1,0 +1,25 @@
+.fake-data {
+  font-family: Helvetica;
+  &_wrap {
+    padding: 20px;
+    h3 { text-align: center; margin-bottom: 30px; }
+    button {
+      padding: 5px;
+      width: 5rem;
+      cursor: pointer;
+    }
+  }
+  &_content {
+    border: 1px solid green;
+    margin-top: 20px;
+    padding: 20px;
+    min-height: 200px;
+    overflow: auto;
+  }
+  &_no-data { padding: 10px; }
+  &_lists {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
