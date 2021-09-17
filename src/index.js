@@ -11,16 +11,15 @@ const ViewFakeData = ({ userID }) => {
 
 	const baseURL = 'https://jsonplaceholder.typicode.com/users/'
 
-	const loadData = () => {
+	const loadData = async () => {
 		// fetchData
-		userID.forEach(id => {
+		await userID.forEach(id => {
 			fetch(baseURL + id + '/todos')
 				.then(response => {
 					response.json().then(data => {
 						return setContent(content => [...content, data])
 					})
 				})
-
 		})
 	}
 	return (
