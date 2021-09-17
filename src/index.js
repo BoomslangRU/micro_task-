@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
@@ -7,20 +8,16 @@ const userID = [1, 2]
 const ViewFakeData = ({ userID }) => {
 
 	const [content, setContent] = useState([])
-	// const [one, two] = userID
 
-	const baseURL = 'https://jsonplaceholder.typicode.com/users/'
+	const loadData = () => {
+		const baseURL = 'https://jsonplaceholder.typicode.com/users/'
+		const requests = userID.map(id => axios(baseURL + id + '/todos'))
 
-	const loadData = async () => {
-		// fetchData
-		await userID.forEach(id => {
-			fetch(baseURL + id + '/todos')
-				.then(response => {
-					response.json().then(data => {
-						return setContent(content => [...content, data])
-					})
-				})
-		})
+		Promise.all(requests)
+			.then(response => {
+				const result = response.map(r => r.data).flat()
+				setContent(result)
+			})
 	}
 	return (
 		<section className='fake-data_wrap'>
@@ -28,9 +25,9 @@ const ViewFakeData = ({ userID }) => {
 			<button onClick={loadData} disabled={content.length > 0}>Load</button>
 			<div className='fake-data_content'>
 				{content.length > 0 ?
-					content.flat().map(item => {
+					content.map((item, id) => {
 						return (
-							<div className='fake-data_lists' key={item.id}>
+							<div className='fake-data_lists' key={id}>
 								<div>{item.userId}</div>
 								<div>{item.id}</div>
 								<div>{item.title}</div>
