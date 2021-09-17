@@ -9,24 +9,19 @@ const ViewFakeData = ({ userID }) => {
 	const [content, setContent] = useState([])
 	// const [one, two] = userID
 
-	const URL = 'https://jsonplaceholder.typicode.com/users/'
+	const baseURL = 'https://jsonplaceholder.typicode.com/users/'
 
-	const loadData = async () => {
+	const loadData = () => {
 		// fetchData
-
-		await fetch(URL + userID[0] + '/todos')
-			.then(response => {
-				response.json().then(data => {
-					return setContent(content => [...content, data])
+		userID.forEach(id => {
+			fetch(baseURL + id + '/todos')
+				.then(response => {
+					response.json().then(data => {
+						return setContent(content => [...content, data])
+					})
 				})
-			})
 
-		await fetch(URL + userID[1] + '/todos')
-			.then(response => {
-				response.json().then(data => {
-					return setContent(content => [...content, data])
-				})
-			})
+		})
 	}
 	return (
 		<section className='fake-data_wrap'>
