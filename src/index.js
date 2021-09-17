@@ -11,7 +11,7 @@ const ViewFakeData = ({ userID }) => {
 
 	const loadData = () => {
 		const baseURL = 'https://jsonplaceholder.typicode.com/users/'
-		const requests = userID.map(id => axios(baseURL + id + '/todos'))
+		const requests = userID.map(id => axios(`${baseURL}${id}/todos`))
 
 		Promise.all(requests)
 			.then(response => {
