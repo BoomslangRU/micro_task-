@@ -25,9 +25,9 @@ const ViewFakeData = ({ userID }) => {
 			<button onClick={loadData} disabled={content.length > 0}>Load</button>
 			<div className='fake-data_content'>
 				{content.length > 0 ?
-					content.map((item, id) => {
+					content.map(item => {
 						return (
-							<div className='fake-data_lists' key={id}>
+							<div className='fake-data_lists' key={item.id}>
 								<div>{item.userId}</div>
 								<div>{item.id}</div>
 								<div>{item.title}</div>
